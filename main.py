@@ -7,4 +7,4 @@ if __name__ == "__main__":
     Base.metadata.create_all(engine)
 
     uvicorn.run(app,
-                port=8080)
+                port=8000)
