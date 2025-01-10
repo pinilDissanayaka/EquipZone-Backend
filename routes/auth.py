@@ -1,8 +1,9 @@
 from fastapi import APIRouter, HTTPException, status, Response
+from fastapi.responses import JSONResponse
 from schema import UserRegistration, UserLogin
 from database import session
 from models import User
-from utils import get_hashed_password, verify_password
+from utils import get_hashed_password, verify_password, create_access_token, create_refresh_token
 
 
 
@@ -49,9 +50,13 @@ async def login(user:UserLogin):
 
     if existing_user:
         if verify_password(password=user.password, hashed_pass=existing_user.password):
-            return Response(
-                content="User Login Successfully",
-                status_code=status.HTTP_200_OK
+            return JSONResponse(
+                content={
+                    "access_token": create_access_token(subject=existing_user.username),
+                    "refresh_token": create_refresh_token(subject=existing_user.username),
+                    "details": existing_user.to_dict()
+                },
+                status_code=200
             )
         else:
             return HTTPException(

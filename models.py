@@ -8,7 +8,6 @@ class User(Base):
 
     user_id = Column(BigInteger, primary_key=True, index=True)
     username = Column(String(length=50), unique=True)
-    user_type= Column(String(5))
     password = Column(String(length=1000))
     nic = Column(String(length=50))
     email = Column(String(length=50))
@@ -18,7 +17,6 @@ class User(Base):
         return {
             "user_id": self.user_id,
             "username": self.username,
-            "user_type": self.user_type,
             "nic": self.nic,
             "email": self.email,
             "phone": self.phone
