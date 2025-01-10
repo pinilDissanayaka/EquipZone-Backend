@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, status, Response
-from schema import UserRegistration
+from schema import UserRegistration, UserLogin
 from database import session
 from models import User
-from utils import get_hashed_password
+from utils import get_hashed_password, verify_password
 
 
 
@@ -14,9 +14,9 @@ router = APIRouter(
 
 @router.post("/register")
 async def register(user:UserRegistration):
-    existing_user = session.query(User).filter_by()
+    existing_user = session.query(User).filter_by(username=user.username).first()
     
-    if user.username == existing_user.username:
+    if existing_user:
         return HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="User with this user name already exist"
@@ -42,6 +42,11 @@ async def register(user:UserRegistration):
             content="User Creation Successfully",
             status_code=status.HTTP_201_CREATED
         )
+
+@router.post("/login")
+async def login(user:UserLogin):
+    
+    
 
 
 

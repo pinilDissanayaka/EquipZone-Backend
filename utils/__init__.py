@@ -1,1 +1,1 @@
-from .utils import get_hashed_password
+from .utils import get_hashed_password, verify_password
