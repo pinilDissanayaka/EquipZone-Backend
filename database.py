@@ -7,7 +7,7 @@ import os
 load_dotenv(find_dotenv())
 
 
-engine=create_engine(url=os.getenv("DATABASE_URL"))
+engine=create_engine(url="mysql+mysqldb://root@localhost:3306/EquipZone")
 
 Base=declarative_base()
 
