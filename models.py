@@ -14,6 +14,16 @@ class User(Base):
     email = Column(String(length=50))
     phone = Column(String(length=50))
 
+    def to_dict(self):
+        return {
+            "user_id": self.user_id,
+            "username": self.username,
+            "user_type": self.user_type,
+            "nic": self.nic,
+            "email": self.email,
+            "phone": self.phone
+        }
+
 class Equipment(Base):
     __tablename__="equipment"
 

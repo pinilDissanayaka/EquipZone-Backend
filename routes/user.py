@@ -18,9 +18,3 @@ async def get_equipments():
     return JSONResponse(
         content=serialized_equipments_data,
         status_code=status.HTTP_200_OK)
-
-
-
-
-
-
