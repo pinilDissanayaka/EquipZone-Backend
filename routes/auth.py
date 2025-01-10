@@ -45,6 +45,26 @@ async def register(user:UserRegistration):
 
 @router.post("/login")
 async def login(user:UserLogin):
+    existing_user = session.query(User).filter_by(username=user.username).first()
+
+    if existing_user:
+        if verify_password(password=user.password, hashed_pass=existing_user.password):
+            return Response(
+                content="User Login Successfully",
+                status_code=status.HTTP_200_OK
+            )
+        else:
+            return HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Given password is incorrect"
+            )
+    else:
+        return HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User with this user name does not exist"
+        )
+
+
     
     
 
