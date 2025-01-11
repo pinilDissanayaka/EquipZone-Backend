@@ -55,7 +55,9 @@ async def delete_equipments(equipment_id:int):
             status_code=status.HTTP_200_OK
         )
     else:
-        HTTPException(
+        return HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Object does not exist"
         )
+
+
