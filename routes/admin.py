@@ -61,3 +61,19 @@ async def delete_equipments(equipment_id:int):
         )
 
 
+@router.put("/equipments/{equipment_id}")
+async def delete_equipments(equipment_id:int, addEquipment : AddEquipment):
+    existing_equipment=session.query(Equipment).filter(Equipment.equipment_id==equipment_id).first()
+
+    if existing_equipment:
+        return Response(
+            content="Object updated successfully.",
+            status_code=status.HTTP_200_OK
+        )
+    else:
+        return HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Object does not exist"
+        )
+
+
