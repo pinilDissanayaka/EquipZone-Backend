@@ -3,7 +3,6 @@ from uuid import UUID, uuid4
 
 
 class UserRegistration(BaseModel):
-    user_id : UUID = Field(default_factory=uuid4)
     username : str = Field(max_length=50, description="Username")
     password : str = Field(max_length=20, min_length=4, description="Password")
     nic : str = Field(max_length=50, description="NIC")
@@ -14,3 +13,10 @@ class UserRegistration(BaseModel):
 class UserLogin(BaseModel):
     username : str = Field(max_length=50, description="Username")
     password : str = Field(max_length=20, min_length=4, description="Password")
+
+
+class AddEquipment(BaseModel):
+    equipment_name : str = Field(description="Name of the equipment")
+    equipment_type : str = Field(description="Type of the equipment")
+    equipment_status : str = Field(description="Status of the equipment")
+    description : str = Field(description="description of the equipment")
