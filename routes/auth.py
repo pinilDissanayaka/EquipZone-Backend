@@ -27,7 +27,6 @@ async def register(user:UserRegistration):
 
 
         new_user= User(
-            user_id = user.user_id,
             username = user.username,
             password = hashed_password,
             nic = user.nic,
