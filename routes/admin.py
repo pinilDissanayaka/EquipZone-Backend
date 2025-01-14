@@ -62,10 +62,17 @@ async def delete_equipments(equipment_id:int):
 
 
 @router.put("/equipments/{equipment_id}")
-async def delete_equipments(equipment_id:int, addEquipment : AddEquipment):
+async def update_equipments(equipment_id:int, addEquipment : AddEquipment):
     existing_equipment=session.query(Equipment).filter(Equipment.equipment_id==equipment_id).first()
 
     if existing_equipment:
+        existing_equipment.equipment_name = addEquipment.equipment_name
+        existing_equipment.equipment_type = addEquipment.equipment_type
+        existing_equipment.equipment_status = addEquipment.equipment_status
+        existing_equipment.description = addEquipment.description
+
+        session.commit()
+        
         return Response(
             content="Object updated successfully.",
             status_code=status.HTTP_200_OK
