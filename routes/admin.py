@@ -1,8 +1,9 @@
 from fastapi import APIRouter, status, Response, HTTPException
 from fastapi.responses import JSONResponse
-from models import Equipment
+from models import Equipment, User
 from database import Base, engine, session
-from schema import AddEquipment
+from utils import get_hashed_password
+from schema import AddEquipment, AddUser
 
 
 router = APIRouter(
@@ -82,5 +83,40 @@ async def update_equipments(equipment_id:int, addEquipment : AddEquipment):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Object does not exist"
         )
+    
+
+@router.post("/users")
+async def add_users(addUser: AddUser):
+    existing_user=session.query(User).filter_by(username=addUser.username).first()
+
+    if existing_user:
+        return HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User with this user name already exist"
+        )
+    else:
+        hashed_password = get_hashed_password(password=addUser.password)
+
+        new_user = User(
+            username = addUser.username,
+            password = hashed_password,
+            nic = addUser.nic,
+            email = addUser.email,
+            phone = addUser.phone
+        )
+
+        session.add(new_user)
+
+        session.commit()
+
+        session.refresh(new_user)
+
+        return Response(
+            content="User added successfully.",
+            status_code=status.HTTP_201_CREATED
+        )
+
+
+
 
 
