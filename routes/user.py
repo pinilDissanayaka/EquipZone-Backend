@@ -10,7 +10,7 @@ router = APIRouter(
     tags=["user"]
 )
 
-@router.get("/get-equipments")
+@router.get("/equipments")
 async def get_equipments():
     all_equipments = session.query(Equipment).all()
 
